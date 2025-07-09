@@ -1,0 +1,92 @@
+#!/sbin/runscript
+
+# backward compatibility for existing gentoo layout 
+#
+if [ -d "/var/lib/fittexxcoin/.fittexxcoin" ]; then
+	FITTEXXCOIND_DEFAULT_DATADIR="/var/lib/fittexxcoin/.fittexxcoin"
+else
+	FITTEXXCOIND_DEFAULT_DATADIR="/var/lib/fittexxcoind"
+fi
+
+FITTEXXCOIND_CONFIGFILE=${FITTEXXCOIND_CONFIGFILE:-/etc/fittexxcoin/fittexxcoin.conf}
+FITTEXXCOIND_PIDDIR=${FITTEXXCOIND_PIDDIR:-/var/run/fittexxcoind}
+FITTEXXCOIND_PIDFILE=${FITTEXXCOIND_PIDFILE:-${FITTEXXCOIND_PIDDIR}/fittexxcoind.pid}
+FITTEXXCOIND_DATADIR=${FITTEXXCOIND_DATADIR:-${FITTEXXCOIND_DEFAULT_DATADIR}}
+FITTEXXCOIND_USER=${FITTEXXCOIND_USER:-${FITTEXXCOIN_USER:-fittexxcoin}}
+FITTEXXCOIND_GROUP=${FITTEXXCOIND_GROUP:-fittexxcoin}
+FITTEXXCOIND_BIN=${FITTEXXCOIND_BIN:-/usr/bin/fittexxcoind}
+FITTEXXCOIND_NICE=${FITTEXXCOIND_NICE:-${NICELEVEL:-0}}
+FITTEXXCOIND_OPTS="${FITTEXXCOIND_OPTS:-${FITTEXXCOIN_OPTS}}"
+
+name="Fittexxcoin Node Daemon"
+description="Fittexxcoin cryptocurrency P2P network daemon"
+
+command="/usr/bin/fittexxcoind"
+command_args="-pid=\"${FITTEXXCOIND_PIDFILE}\" \
+		-conf=\"${FITTEXXCOIND_CONFIGFILE}\" \
+		-datadir=\"${FITTEXXCOIND_DATADIR}\" \
+		-daemon \
+		${FITTEXXCOIND_OPTS}"
+
+required_files="${FITTEXXCOIND_CONFIGFILE}"
+start_stop_daemon_args="-u ${FITTEXXCOIND_USER} \
+			-N ${FITTEXXCOIND_NICE} -w 2000"
+pidfile="${FITTEXXCOIND_PIDFILE}"
+
+# The retry schedule to use when stopping the daemon. Could be either
+# a timeout in seconds or multiple signal/timeout pairs (like
+# "SIGKILL/180 SIGTERM/300")
+retry="${FITTEXXCOIND_SIGTERM_TIMEOUT}"
+
+depend() {
+	need localmount net
+}
+
+# verify
+# 1) that the datadir exists and is writable (or create it)
+# 2) that a directory for the pid exists and is writable
+# 3) ownership and permissions on the config file
+start_pre() {
+	checkpath \
+	-d \
+	--mode 0750 \
+	--owner "${FITTEXXCOIND_USER}:${FITTEXXCOIND_GROUP}" \
+	"${FITTEXXCOIND_DATADIR}"
+
+	checkpath \
+	-d \
+	--mode 0755 \
+	--owner "${FITTEXXCOIND_USER}:${FITTEXXCOIND_GROUP}" \
+	"${FITTEXXCOIND_PIDDIR}"
+
+	checkpath -f \
+	-o ${FITTEXXCOIND_USER}:${FITTEXXCOIND_GROUP} \
+	-m 0660 \
+	${FITTEXXCOIND_CONFIGFILE}
+
+	checkconfig || return 1
+}
+
+checkconfig()
+{
+	if ! grep -qs '^rpcpassword=' "${FITTEXXCOIND_CONFIGFILE}" ; then
+		eerror ""
+		eerror "ERROR: You must set a secure rpcpassword to run fittexxcoind."
+		eerror "The setting must appear in ${FITTEXXCOIND_CONFIGFILE}"
+		eerror ""
+		eerror "This password is security critical to securing wallets "
+		eerror "and must not be the same as the rpcuser setting."
+		eerror "You can generate a suitable random password using the following "
+		eerror "command from the shell:"
+		eerror ""
+		eerror "bash -c 'tr -dc a-zA-Z0-9 < /dev/urandom | head -c32 && echo'"
+		eerror ""
+		eerror "It is recommended that you also set alertnotify so you are "
+		eerror "notified of problems:"
+		eerror ""
+		eerror "ie: alertnotify=echo %%s | mail -s \"Fittexxcoin Alert\"" \
+			"admin@foo.com"
+		eerror ""
+		return 1
+	fi
+}

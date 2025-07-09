@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+#
+#  fittexxcoind The Fittexxcoin Node server.
+#
+#
+# chkconfig: 345 80 20
+# description: fittexxcoind
+# processname: fittexxcoind
+#
+
+# Source function library.
+. /etc/init.d/functions
+
+# you can override defaults in /etc/sysconfig/fittexxcoind, see below
+if [ -f /etc/sysconfig/fittexxcoind ]; then
+        . /etc/sysconfig/fittexxcoind
+fi
+
+RETVAL=0
+
+prog=fittexxcoind
+# you can override the lockfile via FITTEXXCOIND_LOCKFILE in /etc/sysconfig/fittexxcoind
+lockfile=${FITTEXXCOIND_LOCKFILE-/var/lock/subsys/fittexxcoind}
+
+# fittexxcoind defaults to /usr/bin/fittexxcoind, override with FITTEXXCOIND_BIN
+fittexxcoind=${FITTEXXCOIND_BIN-/usr/bin/fittexxcoind}
+
+# fittexxcoind opts default to -disablewallet, override with FITTEXXCOIND_OPTS
+fittexxcoind_opts=${FITTEXXCOIND_OPTS--disablewallet}
+
+start() {
+    echo -n $"Starting $prog: "
+    daemon $DAEMONOPTS $fittexxcoind $fittexxcoind_opts
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && touch $lockfile
+    return $RETVAL
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc $prog
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && rm -f $lockfile
+    return $RETVAL
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status $prog
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: service $prog {start|stop|status|restart}"
+        exit 1
+        ;;
+esac

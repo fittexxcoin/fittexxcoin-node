@@ -1,0 +1,22 @@
+[Unit]
+Description=Fittexxcoin Node Daemon
+After=network.target
+
+[Service]
+User=fittexxcoin
+Group=fittexxcoin
+
+Type=forking
+PIDFile=/var/lib/fittexxcoind/fittexxcoind.pid
+ExecStart=/usr/bin/fittexxcoind -daemon -pid=/var/lib/fittexxcoind/fittexxcoind.pid \
+-conf=/etc/fittexxcoin/fittexxcoin.conf -datadir=/var/lib/fittexxcoind -disablewallet
+
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target

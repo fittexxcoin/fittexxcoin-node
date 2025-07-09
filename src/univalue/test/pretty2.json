@@ -1,0 +1,15 @@
+[
+    [
+        "Fittexxcoin Core",
+        "Fittexxcoin ABC",
+        "Fittexxcoin Node"
+    ],
+    "Fittexxcoin Classic",
+    "Fittexxcoin Unlimited",
+    "Fittexxcoin XT",
+    {
+        "SPV": [
+            "Electron Cash"
+        ]
+    }
+]

@@ -1,0 +1,33 @@
+# /etc/conf.d/fittexxcoind: config file for /etc/init.d/fittexxcoind
+
+# Config file location
+#FITTEXXCOIND_CONFIGFILE="/etc/fittexxcoin/fittexxcoin.conf"
+
+# What directory to write pidfile to?  (created and owned by $FITTEXXCOIND_USER)
+#FITTEXXCOIND_PIDDIR="/var/run/fittexxcoind"
+
+# What filename to give the pidfile
+#FITTEXXCOIND_PIDFILE="${FITTEXXCOIND_PIDDIR}/fittexxcoind.pid"
+
+# Where to write fittexxcoind data (be mindful that the blockchain is large)
+#FITTEXXCOIND_DATADIR="/var/lib/fittexxcoind"
+
+# User and group to own fittexxcoind process
+#FITTEXXCOIND_USER="fittexxcoin"
+#FITTEXXCOIND_GROUP="fittexxcoin"
+
+# Path to fittexxcoind executable
+#FITTEXXCOIND_BIN="/usr/bin/fittexxcoind"
+
+# Nice value to run fittexxcoind under
+#FITTEXXCOIND_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+#FITTEXXCOIND_OPTS=""
+
+# The timeout in seconds OpenRC will wait for fittexxcoind to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+FITTEXXCOIND_SIGTERM_TIMEOUT=60
