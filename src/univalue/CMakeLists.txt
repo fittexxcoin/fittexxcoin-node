@@ -47,7 +47,7 @@ endif(UNIVALUE_BUILD_TESTS)
 
 # Generate lib/univalue_escapes.h
 include(NativeExecutable)
-add_native_executable(univalue_gen gen/gen.cpp)
+add_native_executable(univalue_gen ${CMAKE_CURRENT_SOURCE_DIR}/gen/gen.cpp)
 native_target_include_directories(univalue_gen PUBLIC include)
 
 # Custom target to regenerate univalue_escapes.h
