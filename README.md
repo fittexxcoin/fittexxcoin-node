@@ -24,7 +24,7 @@ What is Fittexxcoin Node?
 
 [Fittexxcoin Node](https://www.fittexxcoinnode.org) is the name of open-source
 software which enables the use of Fittexxcoin. It is a descendant of the
-[Fittexxcoin Core](https://fittexxcoincore.org) and [Fittexxcoin ABC](https://www.fittexxcoinabc.org)
+[Fittexxcoin Core](https://fittexxcoincore.org) 
 software projects.
 
 License
@@ -38,6 +38,51 @@ This product includes software developed by the OpenSSL Project for use in the
 [OpenSSL Toolkit](https://www.openssl.org/), cryptographic software written by
 [Eric Young](mailto:eay@cryptsoft.com), and UPnP software written by Thomas
 Bernard.
+
+build-node using unix 
+-----------------
+
+```bash
+sudo apt-get install build-essential cmake git libboost-chrono-dev libboost-filesystem-dev libboost-test-dev libboost-thread-dev libevent-dev libminiupnpc-dev libssl-dev libzmq3-dev help2man ninja-build python3 clang-tidy libminiupnpc-dev libdb++-dev qttools5-dev qttools5-dev-tools qtbase5-dev protobuf-compiler libprotobuf-dev libqrcodegen-dev pkg-config libtool autoconf automake libevent-dev ca-certificates libcurl4-openssl-dev apt-utils dos2unix
+```
+
+```bash
+git clone  https://github.com/fittexxcoin/fittexxcoin-node.git
+
+cd fittexxcoin-node
+
+mkdir build
+
+cd build
+
+cmake -GNinja  .. -DBUILD_FITTEXXCOIN_QT=OFF -DENABLE_UPNP=OFF -DENABLE_MAN=OFF -DBUILD_FITTEXXCOIN_SEEDER=OFF -DBUILD_FITTEXXCOIN_ZMQ=ON
+
+find ../ -name "*.sh" -exec dos2unix {} \; -exec chmod +x {} \;
+
+find ../ -name "*.py" -exec dos2unix {} \; -exec chmod +x {} \;
+
+ninja
+```
+
+when install completeted create new file in .fittexxcoin directory name : fittexxcoin.conf add this lines
+-----------------------------------------------------------------------------------------------
+```bash
+server=1
+txindex=1
+acceptnonstdtxn=0
+dns=1
+listen=1
+rpcuser=user
+rpcpassword=pass
+rpcport=7889
+addnode=144.91.120.225=7890
+addnode=91.55.255.202:7890
+addnode=89.117.149.130:7890
+addnode=66.94.115.80:7890
+addnode=173.212.224.67:7890
+```
+save and run ./fittexxcoind ./fittexxcoin-cli 
+PS: fittexxcoin-qt is not fully developed please do not use it
 
 Development Process
 -------------------
