@@ -82,7 +82,7 @@ public:
         consensus.nSubsidyHalvingInterval = 210000;
         // 00000000000000ce80a7e057163a4db1d5ad7b20fb6f598c9597b9665c8fb0d4 -
         // April 1, 2012
-        consensus.BIP16Height = 160;
+        consensus.BIP16Height = 0;
         consensus.BIP34Height = 165;
         // 000000000000000004c2b624ed5d7756c508d90fd0da2c7c679febfa6c4735f0
         consensus.BIP65Height = 240;
@@ -94,7 +94,7 @@ public:
             "00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         // two weeks
         consensus.nPowTargetTimespan = 7 * 24 * 60 * 60;
-        consensus.nPowTargetSpacing = 5 * 60;
+        consensus.nPowTargetSpacing = 10 * 60;
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
 
@@ -150,7 +150,7 @@ public:
                uint256S("0000000062a7f8838289d641d0dcc42003a778c0df0fa7d4a4464c2be10ad2de"));
         assert(genesis.hashMerkleRoot ==
                uint256S("b1b8ae17a227ed0861f25859ecd0ccb28b974a2e7c6b948d7470fa1dfde5eb9a"));
-                              vSeeds.emplace_back("164.68.126.156");
+                              vSeeds.emplace_back("144.91.120.225");
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<uint8_t>(1, 0);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<uint8_t>(1, 5);
@@ -175,12 +175,12 @@ public:
         // (height 768454).
         chainTxData = ChainTxData{
             // UNIX timestamp of last known number of transactions.
-            0,
+            1753104000,
             // Total number of transactions between genesis and that timestamp
             // (the tx=... number in the ChainStateFlushed debug.log lines)
-            0,
+            100,
             // Es0timated number of transactions per second after that timestamp.
-            0,
+            1.49,
         };
     }
 };
