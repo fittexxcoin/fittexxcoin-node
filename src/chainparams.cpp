@@ -175,7 +175,7 @@ public:
         // (height 768454).
         chainTxData = ChainTxData{
             // UNIX timestamp of last known number of transactions.
-            1753104000,
+            1753605005,
             // Total number of transactions between genesis and that timestamp
             // (the tx=... number in the ChainStateFlushed debug.log lines)
             100,
