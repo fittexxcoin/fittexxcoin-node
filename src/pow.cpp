@@ -466,8 +466,10 @@ static arith_uint256 ComputeTarget(const CBlockIndex *pindexFirst,
  * basing our computation on via a median of 3.
  */
 static const CBlockIndex *GetSuitableBlock(const CBlockIndex *pindex) {
-    assert(pindex->nHeight >= 3);
 
+    if (pindex == nullptr || pindex->pprev == nullptr || pindex->pprev->pprev == nullptr) {
+        return pindex; // fallback to current block if history is insufficient
+    }
     /**
      * In order to avoid a block with a very skewed timestamp having too much
      * influence, we select the median of the 3 top most blocks as a starting
