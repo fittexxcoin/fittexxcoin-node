@@ -8,8 +8,8 @@
 #include <uint256.h>
 
 namespace ChainParamsConstants {
-    const BlockHash MAINNET_DEFAULT_ASSUME_VALID = BlockHash::fromHex("");
-    const uint256 MAINNET_MINIMUM_CHAIN_WORK = uint256S("0000000000000000000000000000000000000000000000000000000010010101");
+    const BlockHash MAINNET_DEFAULT_ASSUME_VALID = BlockHash::fromHex("0000000000000161a02e5c02b11e65e9aea5bd197f0ee77c216d4efc071266ec");
+    const uint256 MAINNET_MINIMUM_CHAIN_WORK = uint256S("0x0000000000000000000000000000000000000000000000000000000000000001");
 
     const BlockHash TESTNET_DEFAULT_ASSUME_VALID = BlockHash::fromHex("00");
     const uint256 TESTNET_MINIMUM_CHAIN_WORK = uint256S("00");
@@ -21,3 +21,4 @@ namespace ChainParamsConstants {
     const BlockHash SCALENET_DEFAULT_ASSUME_VALID = BlockHash::fromHex("00");
     const uint256 SCALENET_MINIMUM_CHAIN_WORK = uint256S("");
 } // namespace ChainParamsConstants
+
