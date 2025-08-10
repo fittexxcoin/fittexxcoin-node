@@ -165,28 +165,19 @@ public:
         fRequireStandard = false;
         m_is_test_chain = false;
 
-        checkpointData = {
-            /* .mapCheckpoints = */ {
-            1753725415,
-            // Total number of transactions between genesis and that timestamp
-            // (the tx=... number in the ChainStateFlushed debug.log lines)
-            2570,
-            // Es0timated number of transactions per second after that timestamp.
-            0.0000000000000000001,
-
-            }};
+     
 
         // Data as of block
         // 000000000000000002fbeddc14bb8b87eb68a1dd4e5a569cb8938b65ea3cc5a3
         // (height 768454).
         chainTxData = ChainTxData{
             // UNIX timestamp of last known number of transactions.
-            1753605005,
+            1753725415,
             // Total number of transactions between genesis and that timestamp
             // (the tx=... number in the ChainStateFlushed debug.log lines)
-            100,
+            2570,
             // Es0timated number of transactions per second after that timestamp.
-            1.49,
+            0.0000000000000000001,
         };
     }
 };
