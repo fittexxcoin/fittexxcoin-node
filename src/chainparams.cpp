@@ -167,6 +167,12 @@ public:
 
         checkpointData = {
             /* .mapCheckpoints = */ {
+          1753725415,
+            // Total number of transactions between genesis and that timestamp
+            // (the tx=... number in the ChainStateFlushed debug.log lines)
+            2570,
+            // Es0timated number of transactions per second after that timestamp.
+            0.0000000000000000001,
 
             }};
 
