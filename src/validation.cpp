@@ -1155,7 +1155,7 @@ bool IsInitialBlockDownload() {
         return true;
     }
     if (::ChainActive().Tip()->GetBlockTime() < (GetTime() - nMaxTipAge)) {
-        return true;
+        return false;
     }
     LogPrintf("Leaving InitialBlockDownload (latching to false)\n");
     latchToFalse.store(true, std::memory_order_relaxed);
